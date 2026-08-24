@@ -1,0 +1,44 @@
+manifest_id: TL-DNA-PROVENANCE-2026-08-24
+package_version: "1.1"
+integration_mode: additive
+core_architecture_modified: false
+repository: nextgentopal-commits/notion-auto-system
+branch: main
+
+source_lock:
+  - original_name: DEJA-VU-3_TUERKISCHE-LITERATUR-DNA_MASTER_v1.0.md
+    repository_path: source-lock/DEJA-VU-3_TUERKISCHE-LITERATUR-DNA_MASTER_v1.0.md
+    sha256: 6669f69a391d5a6114ce944ca737613665601e73f382448c3704a87018e641f9
+    bytes: 23020
+    treatment: immutable_copy
+  - original_name: TUERKISCHE_LITERATUR_GITHUB_RESEARCH_MASTER_v0.1.md
+    internal_title_version: "0.9"
+    repository_path: source-lock/TUERKISCHE_LITERATUR_GITHUB_RESEARCH_MASTER_v0.9.md
+    sha256: 90ff1b8a37cd9c187d9a7c9a8bd40ffdb08cd330125c27d168d5822eb8bfd54c
+    bytes: 148395
+    treatment: immutable_copy
+  - original_name: turkische_literatur_experte.v2.json
+    repository_path: source-lock/turkische_literatur_experte.v2.json
+    sha256: b82e5125901f669614cece17516fcfbcb7de53427c8d64a1a0e0bf6651b84f5a
+    bytes: 6414
+    treatment: immutable_copy
+  - original_name: "Türkische Literatur: Quellenkritische Deep-Research-Analyse"
+    repository_path: source-lock/tuerkische_literatur_quellenkritische_analyse.json
+    sha256: 81a5a6ba457f6d27739e4d7dd836b920438df6dd6a52f17fdb34a698199620f6
+    bytes: 58795
+    treatment: immutable_copy
+  - original_name: DEJA-VU-3_Systemzustand_Aktive-Literaturintegration_2026-08-04.md
+    repository_path: source-lock/DEJA-VU-3_Systemzustand_Aktive-Literaturintegration_2026-08-04.md
+    sha256: 4c236e466aeadcd5450bedd19de9b3f72c774f964be1d6ccd906dd51240a7063
+    bytes: 26428
+    treatment: immutable_copy
+
+governance:
+  source_lock_required: true
+  overwrite_existing_approved_sources: false
+  living_author_imitation: forbidden
+  quote_without_verified_source: forbidden
+  oral_variant_as_fixed_authorship: forbidden
+  unknown_rights_publication: blocked
+  github_public_equals_public_domain: false
+

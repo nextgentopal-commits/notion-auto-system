@@ -1,0 +1,54 @@
+{
+  "id": "knowledge.turkish_literature_expert_v2",
+  "name": "Türkische Literatur – Expertenmodul",
+  "version": "2.0.0",
+  "language": "de",
+  "status": "source_integrated_validation_pending",
+  "source_provenance": {"type": "user_supplied_source", "received": "2026-08-03", "factual_verification": "pending", "interpretive_claims_default_evidence": "C"},
+  "focus": {"primary": ["türkische Literatur", "Autoren-DNA", "psychologische Analysemethode", "Gattungen"], "secondary": ["internationale literarische Verflechtungen"]},
+  "operating_rules": [
+    "Historische Fakten und Werkangaben vor produktiver Verwendung gegen Primär- oder Fachquellen prüfen.",
+    "Biografische Fakten als Evidenz A, stark begründete Werkanalyse als B und kreative DNA-Gewichte als C kennzeichnen.",
+    "Psychologische Begriffe als Interpretationswerkzeuge verwenden, niemals als klinische Diagnose.",
+    "Lebende Autorinnen und Autoren analysieren, aber ihren unverwechselbaren Stil nicht imitieren.",
+    "Aus mehreren DNA-Profilen nur durch bewusste Auswahl, Gewichtung und originale Rekombination ableiten.",
+    "Autoren-DNA als Qualitätsfilter anwenden und im Validator nachweisen; bloße Namensnennung genügt nicht."
+  ],
+  "periods": [
+    {"name": "Divan-Literatur", "period": "13.–19. Jahrhundert", "traits": ["arabische und persische Poetik", "gebundene Formen", "Sufismus", "göttliche und profane Liebe"], "representatives": ["Fuzûlî", "Bâkî", "Nâbî", "Şeyh Galip"]},
+    {"name": "Tanzimat-Literatur", "period": "1860–1896", "traits": ["Verwestlichung", "Roman und Theater", "Gesellschaftskritik"], "representatives": ["İbrahim Şinasi", "Namık Kemal", "Abdülhak Hâmid Tarhan", "Recaizâde Mahmud Ekrem"]},
+    {"name": "Servet-i Fünûn", "period": "1896–1901", "traits": ["Ästhetizismus", "Kunst für die Kunst", "Introspektion", "reiche osmanische Dichtersprache"], "representatives": ["Tevfik Fikret", "Cenap Şahabettin", "Halit Ziya Uşaklıgil"]},
+    {"name": "Fecr-i Âtî", "period": "1909–1912", "traits": ["organisierte Literaturgruppe", "Übergang zur Nationalen Literatur"], "representatives": ["Ahmet Haşim", "Yakup Kadri Karaosmanoğlu"]},
+    {"name": "Millî Edebiyat", "period": "1911–1923", "traits": ["vereinfachte Volkssprache", "anatolisches Leben", "Realismus"], "representatives": ["Ömer Seyfettin", "Ziya Gökalp", "Mehmet Emin Yurdakul", "Halide Edib Adıvar"]},
+    {"name": "Republikanische Literatur", "period": "seit 1923", "traits": ["Realismus", "Dorfliteratur", "Modernismus", "Postmoderne", "Migration"], "representatives": ["Yaşar Kemal", "Orhan Kemal", "Sabahattin Ali", "Ahmet Hamdi Tanpınar", "Orhan Pamuk", "Elif Şafak"]}
+  ],
+  "genres": [
+    {"name": "Roman", "function": "Gesellschaft, Dorf, Moderne und postmoderne Erzählstrukturen"},
+    {"name": "Şiir", "function": "Divan-Metrik, Volksgesang und moderne freie Rhythmik"},
+    {"name": "Hikâye", "function": "Mündliche Erzähltradition bis moderne Kurzgeschichte"},
+    {"name": "Tiyatro", "function": "Dramatische Form und gesellschaftliche Aufklärung"},
+    {"name": "Deneme / Anı / Eleştiri", "function": "Identität, Kulturwandel und Kritik"}
+  ],
+  "modern_movements": [
+    {"name": "Garip / Birinci Yeni", "representatives": ["Orhan Veli Kanık", "Melih Cevdet Anday", "Oktay Rifat"], "traits": ["Alltagssprache", "Anti-Pathos", "gewöhnliches Leben"]},
+    {"name": "İkinci Yeni", "representatives": ["Edip Cansever", "Turgut Uyar", "Cemal Süreya", "İlhan Berk", "Ece Ayhan"], "traits": ["Abstraktion", "Metapher", "Surrealität", "Sprachphilosophie"]},
+    {"name": "Köy Edebiyatı", "representatives": ["Mahmut Makal", "Yaşar Kemal", "Talip Apaydın"], "traits": ["anatolische Landbevölkerung", "soziale und wirtschaftliche Realität"]}
+  ],
+  "author_profiles": [
+    {"author": "Sabahattin Ali", "living": false, "core_tension": "Realismus und Melancholie gegen soziale Ungerechtigkeit", "thinking": "schonungslos, direkt und empathisch", "drivers": ["Verzweiflung", "Zerrissenheit", "unerfüllte Sehnsucht", "Gerechtigkeit"], "transfer": ["harte Empathie", "Charakterstudie", "melancholischer Spannungsbogen"], "evidence_grade": "C"},
+    {"author": "Yaşar Kemal", "living": false, "core_tension": "Naturgewalt und menschlicher Freiheitsdrang", "thinking": "zyklisch, episch und mythologisch", "drivers": ["Widerstand", "Freiheit", "Ehrfurcht", "Unterdrückungswut"], "transfer": ["monumentale Struktur", "Natur als Kraft", "Widerstandsbogen"], "evidence_grade": "C"},
+    {"author": "Ahmet Hamdi Tanpınar", "living": false, "core_tension": "Zeit, Erinnerung und kultureller Übergang", "thinking": "reflektierend, musikalisch und nichtlinear", "drivers": ["Verlustangst", "kulturelle Heimatlosigkeit", "ästhetische Ekstase", "Geschichtsecho"], "transfer": ["Zeitschichten", "psychologische Innentiefe", "atmosphärischer Rhythmus"], "evidence_grade": "C"},
+    {"author": "Orhan Pamuk", "living": true, "core_tension": "Identität, Spiegelung, Geheimnis und Erinnerung", "thinking": "postmodern, dekonstruktiv und verschachtelt", "drivers": ["Besessenheit", "Eifersucht", "Doppelidentität", "Neugier", "Verfallsmelancholie"], "transfer": ["Meta-Ebene", "Rätselstruktur", "Tradition-Moderne-Konflikt"], "restriction": "Keine direkte Stilimitation; nur abstrakte, transformierte Strukturmerkmale.", "evidence_grade": "C"},
+    {"author": "Orhan Veli Kanık", "living": false, "core_tension": "Alltagsnähe gegen elitäres Pathos", "thinking": "anti-elitär, direkt und ironisch", "drivers": ["Freiheit", "Staunen", "Ironie", "Alltagsempathie"], "transfer": ["Minimalismus", "Alltagsphilosophie", "Anti-Pathos"], "evidence_grade": "C"}
+  ],
+  "international_links": [
+    "Französische Romantik und Realismus im Umfeld der Tanzimat-Literatur",
+    "Existenzialistische Verbindungen in republikanischer Nachkriegsliteratur",
+    "Postmoderne Einflüsse und weltweite Rezeption",
+    "Deutsch-türkische Migrationsliteratur als kulturelle Brücke"
+  ],
+  "analysis_contract": {
+    "required_dimensions": ["historical_context", "works", "core_question", "psychological_tension", "thinking_pattern", "emotional_drivers", "language_signals", "rhythm", "symbols", "anti_dna", "creative_transfer", "evidence", "validation"],
+    "output_rule": "Zuerst analysieren, dann DNA gewichten, anschließend original transformieren und gegen Anti-DNA prüfen."
+  }
+}

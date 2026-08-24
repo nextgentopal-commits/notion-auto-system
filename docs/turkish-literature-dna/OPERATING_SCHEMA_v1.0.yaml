@@ -1,0 +1,190 @@
+schema_id: deja_vu_3.turkish_literature_dna
+version: "1.0.0"
+language: de
+status: integrated_foundation_validation_continues
+
+architecture:
+  hierarchy: [MASTER, MODULE, DNA, PRODUCTION]
+  allowed_library_extensions: [process_dna, literature_dna, human_dna, symbol_dna, culture_dna]
+  new_library_types_allowed: false
+  core_architecture_mutable: false
+
+source_governance:
+  evidence_classes:
+    A1: primary_text_facsimile_or_critical_edition
+    A2: scholarly_edited_text
+    B1: academic_reference_catalogue_or_monograph
+    B2: scholarly_interpretation
+    C1: documented_oral_variant
+    C2: collection_without_critical_apparatus
+    D: anonymous_dump_quote_card_or_repost
+  separate_layers: [fact, interpretation, abstraction, transformation]
+  forbidden:
+    - fabricated_quote_title_date_edition_or_attribution
+    - silent_modernization_translation_shortening_or_correction
+    - fixed_authorship_from_theme_or_style
+    - public_repository_equals_public_domain
+    - living_author_imitation
+    - author_narrator_character_collapse
+    - sacred_or_minorized_material_as_decoration
+
+work_anchor:
+  author_or_tradition: ""
+  title_or_form: ""
+  language_script: ""
+  genre: ""
+  edition_or_witness: ""
+  passage_reference: ""
+  repository_url: ""
+  repository_path: ""
+  commit_sha: ""
+  evidence_class: ""
+  attribution_status: ""
+  rights_status: public_domain_verified | licensed | protected | unknown
+  factual_observation: []
+  interpretation: []
+  abstract_mechanism: []
+  transformation_permission: blocked | mechanism_only | analysis | quotation_verified
+  quote_permission: false
+  unresolved_questions: []
+
+human_situation:
+  person: ""
+  age_phase: ""
+  social_place: ""
+  material_reality: ""
+  desire: ""
+  duty: ""
+  wound: ""
+  inner_conflict: ""
+  outer_conflict: ""
+  price: ""
+
+dna_selection:
+  gold:
+    mechanism_id: ""
+    function: thought_and_emotion_control
+    reason: ""
+  silver:
+    mechanism_id: ""
+    function: contrast_form_or_perspective
+    reason: ""
+  bronze:
+    mechanism_id: ""
+    function: rhythm_space_or_image_accent
+    reason: ""
+  forbidden_model: author_percentages
+
+emotion_dna:
+  term: ""
+  trigger: ""
+  perception: ""
+  inner_sentence: ""
+  body_channels: []
+  social_action: ""
+  counter_emotion: ""
+  relation: ""
+  time_direction: ""
+  lasting_change: ""
+  cultural_guard: ""
+
+rhythm_dna:
+  system: aruz | hece | free | hybrid | performed
+  pattern: ""
+  durak_or_pause_structure: ""
+  breath_units: []
+  repetition: []
+  acceleration: []
+  interruption: []
+  sound_relations: []
+  semantic_stress: []
+  performance_context: ""
+  validation: manual_scan_required
+
+thought:
+  lead_mode: ""
+  counter_mode: ""
+  blind_spot_test: ""
+
+rhetoric:
+  lead_card: ""
+  support_cards: []
+  counterforce: ""
+
+perspective:
+  card: ""
+  knowledge: ""
+  moral_stake: ""
+  time_position: ""
+  language_register: ""
+  body_behavior: ""
+  image_space: ""
+  shift_valid_when_at_least_two_dimensions_change: true
+
+human_expression:
+  gaze_focus_lids: ""
+  brows_forehead: ""
+  lips_jaw_swallow: ""
+  hands_grip_contact: ""
+  shoulders_torso_distance: ""
+  breath_neck: ""
+  skin_physiology: ""
+  movement_chain:
+    - intention
+    - gaze
+    - weight_shift
+    - joints
+    - tension
+    - contact
+    - after_movement
+  prohibited_inference: [ethnicity, intelligence, morality, culture, diagnosis]
+
+knowledge_node:
+  id: ""
+  name: ""
+  definition: ""
+  human_process: []
+  emotions: []
+  thinking: []
+  psychology_links: []
+  philosophy_links: []
+  literature_links: []
+  symbolism_links: []
+  human_dna: []
+  visual_dna: []
+  narrative_dna: []
+  audio_dna: []
+  culture_dna: []
+  mythology_links: []
+  relations: []
+  weighting: {gold: null, silver: null, bronze: null}
+  validation: []
+
+transformation:
+  new_insight: ""
+  text_function: ""
+  image_or_audio_function: ""
+  false_attribution: false
+  author_name_attached_to_original_work: false
+
+validation:
+  source_gate: pending
+  literary_gate: pending
+  human_gate: pending
+  cultural_gate: pending
+  originality_gate: pending
+  rights_gate: pending
+  visual_or_audio_gate: pending
+  score_dimensions:
+    completeness: 0
+    accuracy: 0
+    source_integrity: 0
+    literary_logic: 0
+    cultural_precision: 0
+    originality: 0
+    human_realism: 0
+    usability: 0
+    design: 0
+    safety: 0
+  pass_rule: every_relevant_score_at_least_4_and_no_critical_defect
+
