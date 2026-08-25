@@ -1,0 +1,10 @@
+[project]
+name = "agency-swarm-controlled"
+version = "1.0.0"
+description = "Agency Swarm – Controlled Intelligence System"
+requires-python = ">=3.11"
+dependencies = ["pydantic>=2.0"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
