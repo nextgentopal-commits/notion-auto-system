@@ -2,6 +2,7 @@ from uuid import uuid4
 import re
 
 from agency.routing.router import route_task
+from agency.routing.source_policy import decide_source_route
 from agency.runtime.guard import RuntimeGuard
 from agency.observability.trace import RunTrace
 from agency.validation.semantic_rules import validate_research_result, validate_analysis_result
@@ -31,7 +32,10 @@ class Orchestrator:
             raise ValueError("Kein Repository im Format owner/name gefunden.")
         return m.group(1)
 
-    def run(self, goal: str, repository_facts: dict | None = None, *, workspace: str | None = None, build_changes: list[PlannedChange] | None = None, build_scope: BuildScope | None = None, deploy_to: str | None = None, approval_token: ApprovalToken | None = None, state_version: int = 1, run_state_path: str | None = None):
+    def run(self, goal: str, repository_facts: dict | None = None, *, workspace: str | None = None, build_changes: list[PlannedChange] | None = None, build_scope: BuildScope | None = None, deploy_to: str | None = None, approval_token: ApprovalToken | None = None, state_version: int = 1, run_state_path: str | None = None, web_mode: str = "auto"):
+        if web_mode not in {"auto", "always", "never"}:
+            raise ValueError("web_mode must be one of: auto, always, never")
+
         run_id = str(uuid4())
         trace = RunTrace(run_id)
         runtime = RuntimeGuard()
@@ -50,9 +54,29 @@ class Orchestrator:
         ok, reason = runtime.before_agent("research", "inspect_repository", repo)
         if not ok:
             return {"status": "BLOCKED", "reason": reason, "trace": trace.to_dict()}
+
         research = self.research.inspect_repository(repo, repository_facts)
         validate_research_result(research)
-        trace.record(category="AGENT", event_type="RESEARCH_COMPLETED", status="SUCCESS", actor="research", metadata={"findings": len(research.findings)})
+
+        source_route = {"mode": "deterministic", "include_web": False, "reason": "INJECTED_FACTS"}
+        if repository_facts is None:
+            if web_mode == "never":
+                source_route = {"mode": "never", "include_web": False, "reason": "WEB_DISABLED"}
+            else:
+                decision = decide_source_route(research, force_web=(web_mode == "always"))
+                source_route = {"mode": web_mode, "include_web": decision.include_web, "reason": decision.reason}
+                trace.record(
+                    category="ROUTING",
+                    event_type="SOURCE_ROUTE_SELECTED",
+                    status="SUCCESS",
+                    actor="orchestrator",
+                    metadata=source_route,
+                )
+                if decision.include_web:
+                    research = self.research.inspect_repository(repo, None, include_web=True)
+                    validate_research_result(research)
+
+        trace.record(category="AGENT", event_type="RESEARCH_COMPLETED", status="SUCCESS", actor="research", metadata={"findings": len(research.findings), "source_route": source_route})
         ok, reason = runtime.before_agent("analyst", "analyze_repository", repo, state_repr=research.model_dump_json())
         if not ok:
             return {"status": "BLOCKED", "reason": reason, "trace": trace.to_dict()}
@@ -61,7 +85,7 @@ class Orchestrator:
         analysis = self.analyst.analyze_repository(research)
         validate_analysis_result(analysis)
         trace.record(category="AGENT", event_type="ANALYSIS_COMPLETED", status="SUCCESS", actor="analyst", metadata={"decision": analysis.overall_decision})
-        result = {"status": "COMPLETED", "repository": repo, "research_result": research.model_dump(), "analysis_result": analysis.model_dump()}
+        result = {"status": "COMPLETED", "repository": repo, "source_route": source_route, "research_result": research.model_dump(), "analysis_result": analysis.model_dump()}
         if analysis.overall_decision == "A" and build_changes is not None:
             if workspace is None or build_scope is None:
                 raise ValueError("workspace and build_scope are required for build execution")
