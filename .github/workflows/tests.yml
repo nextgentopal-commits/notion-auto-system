@@ -68,3 +68,54 @@ jobs:
           for finding in findings:
               print(f"[{finding.evidence_level}/{finding.relevance}] {finding.claim}")
           PY
+
+  live-web-smoke:
+    if: github.event_name == 'push'
+    needs: test
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install live research dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e '.[live]'
+
+      - name: Live Web Research smoke test
+        if: env.OPENAI_API_KEY != ''
+        run: |
+          python - <<'PY'
+          from agency.agents.research import ResearchAgent
+          from agency.validation.schemas import ResearchFinding, ResearchResult
+
+          initial = ResearchResult(
+              status="COMPLETED",
+              findings=[ResearchFinding(
+                  claim="VRSEN/agency-swarm requires independent web verification",
+                  source="https://github.com/VRSEN/agency-swarm",
+                  evidence_level="E4",
+                  relevance="R3",
+                  confidence=0.50,
+              )],
+              confidence=0.50,
+          )
+          result = ResearchAgent().augment_with_web("VRSEN/agency-swarm", initial)
+          assert len(result.findings) > 1, "Web research returned no additional evidence"
+          assert any(f.source != "https://github.com/VRSEN/agency-swarm" for f in result.findings)
+          print(f"LIVE_WEB_RESEARCH_OK findings={len(result.findings)} confidence={result.confidence}")
+          PY
+
+      - name: Report missing web credential
+        if: env.OPENAI_API_KEY == ''
+        run: echo "LIVE_WEB_RESEARCH_SKIPPED OPENAI_API_KEY secret is not configured"
