@@ -31,3 +31,40 @@ jobs:
 
       - name: Run tests
         run: python -m pytest -q
+
+  live-github-smoke:
+    if: github.event_name == 'push'
+    needs: test
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install project
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e .
+
+      - name: Live GitHub Research smoke test
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          from agency.research.sources import GitHubPublicSource
+
+          findings = GitHubPublicSource().inspect_repository("VRSEN/agency-swarm")
+          assert findings, "No live GitHub findings returned"
+          assert any("VRSEN/agency-swarm" in f.claim for f in findings)
+          assert all(f.source.startswith("https://github.com/") for f in findings)
+          print(f"LIVE_RESEARCH_OK findings={len(findings)}")
+          for finding in findings:
+              print(f"[{finding.evidence_level}/{finding.relevance}] {finding.claim}")
+          PY
