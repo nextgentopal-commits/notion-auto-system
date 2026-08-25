@@ -30,6 +30,59 @@ class ResearchAgent:
             confidence=facts.get("confidence", 0.0),
         )
 
+    def augment_with_web(self, repository: str, research: ResearchResult) -> ResearchResult:
+        """Add independent web evidence to an existing research result.
+
+        The existing GitHub evidence is preserved exactly as collected. This avoids a second
+        GitHub request during escalation and produces one coherent evidence packet.
+        """
+        findings = list(research.findings)
+        contradictions = list(research.contradictions)
+        unknowns = list(research.unknowns)
+        errors = [research.error] if research.error else []
+
+        try:
+            packet = self.web_source.search(
+                f"Research the current repository {repository}. Verify its latest release, "
+                "architecture, dependencies, capabilities, and material risks using primary "
+                "sources where possible."
+            )
+            findings.extend(
+                ResearchFinding(
+                    claim=item.claim,
+                    source=item.source,
+                    evidence_level=item.evidence_level,
+                    relevance=item.relevance,
+                    confidence=item.confidence,
+                )
+                for item in packet.findings
+            )
+            contradictions.extend(packet.contradictions)
+            unknowns.extend(packet.unknowns)
+        except SourceUnavailable as exc:
+            errors.append(str(exc))
+            unknowns.append("Live web evidence is unavailable.")
+
+        if not findings:
+            return ResearchResult(
+                status="FAILED",
+                findings=[],
+                contradictions=contradictions,
+                unknowns=unknowns,
+                confidence=0.0,
+                error="; ".join(errors) or "SOURCE_NOT_AVAILABLE",
+            )
+
+        confidence = sum(item.confidence for item in findings) / len(findings)
+        return ResearchResult(
+            status="COMPLETED",
+            findings=findings,
+            contradictions=contradictions,
+            unknowns=unknowns,
+            confidence=round(confidence, 4),
+            error="; ".join(errors) if errors else None,
+        )
+
     def inspect_repository(
         self,
         repository: str,
@@ -65,45 +118,15 @@ class ResearchAgent:
             errors.append(str(exc))
             unknowns.append("Live GitHub repository evidence is unavailable.")
 
-        if include_web:
-            try:
-                packet = self.web_source.search(
-                    f"Research the current repository {repository}. Verify its latest release, "
-                    "architecture, dependencies, capabilities, and material risks using primary "
-                    "sources where possible."
-                )
-                findings.extend(
-                    ResearchFinding(
-                        claim=item.claim,
-                        source=item.source,
-                        evidence_level=item.evidence_level,
-                        relevance=item.relevance,
-                        confidence=item.confidence,
-                    )
-                    for item in packet.findings
-                )
-                contradictions.extend(packet.contradictions)
-                unknowns.extend(packet.unknowns)
-            except SourceUnavailable as exc:
-                errors.append(str(exc))
-                unknowns.append("Live web evidence is unavailable.")
-
-        if not findings:
-            return ResearchResult(
-                status="FAILED",
-                findings=[],
-                contradictions=contradictions,
-                unknowns=unknowns,
-                confidence=0.0,
-                error="; ".join(errors) or "SOURCE_NOT_AVAILABLE",
-            )
-
-        confidence = sum(item.confidence for item in findings) / len(findings)
-        return ResearchResult(
-            status="COMPLETED",
+        result = ResearchResult(
+            status="COMPLETED" if findings else "FAILED",
             findings=findings,
             contradictions=contradictions,
             unknowns=unknowns,
-            confidence=round(confidence, 4),
-            error="; ".join(errors) if errors else None,
+            confidence=(round(sum(item.confidence for item in findings) / len(findings), 4) if findings else 0.0),
+            error="; ".join(errors) if errors else (None if findings else "SOURCE_NOT_AVAILABLE"),
         )
+
+        if include_web:
+            return self.augment_with_web(repository, result)
+        return result
