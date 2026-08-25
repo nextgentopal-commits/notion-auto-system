@@ -73,8 +73,15 @@ class Orchestrator:
                     metadata=source_route,
                 )
                 if decision.include_web:
-                    research = self.research.inspect_repository(repo, None, include_web=True)
+                    research = self.research.augment_with_web(repo, research)
                     validate_research_result(research)
+                    trace.record(
+                        category="AGENT",
+                        event_type="WEB_RESEARCH_COMPLETED",
+                        status="SUCCESS" if research.error is None else "FAILED",
+                        actor="research",
+                        metadata={"findings": len(research.findings), "error": research.error},
+                    )
 
         trace.record(category="AGENT", event_type="RESEARCH_COMPLETED", status="SUCCESS", actor="research", metadata={"findings": len(research.findings), "source_route": source_route})
         ok, reason = runtime.before_agent("analyst", "analyze_repository", repo, state_repr=research.model_dump_json())
