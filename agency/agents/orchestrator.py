@@ -32,6 +32,15 @@ class Orchestrator:
             raise ValueError("Kein Repository im Format owner/name gefunden.")
         return m.group(1)
 
+    def _augment_research_with_web(self, repo: str, research):
+        augmenter = getattr(self.research, "augment_with_web", None)
+        if callable(augmenter):
+            return augmenter(repo, research)
+        # Backward-compatible path for legacy test doubles/adapters that only implement
+        # inspect_repository(..., include_web=True). Production ResearchAgent uses the
+        # augmentation path above and therefore does not refetch GitHub.
+        return self.research.inspect_repository(repo, None, include_web=True)
+
     def run(self, goal: str, repository_facts: dict | None = None, *, workspace: str | None = None, build_changes: list[PlannedChange] | None = None, build_scope: BuildScope | None = None, deploy_to: str | None = None, approval_token: ApprovalToken | None = None, state_version: int = 1, run_state_path: str | None = None, web_mode: str = "auto"):
         if web_mode not in {"auto", "always", "never"}:
             raise ValueError("web_mode must be one of: auto, always, never")
@@ -73,7 +82,7 @@ class Orchestrator:
                     metadata=source_route,
                 )
                 if decision.include_web:
-                    research = self.research.augment_with_web(repo, research)
+                    research = self._augment_research_with_web(repo, research)
                     validate_research_result(research)
                     trace.record(
                         category="AGENT",
