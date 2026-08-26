@@ -1,0 +1,15 @@
+{
+  "paymentMethods": [
+    {
+      "id": "stripe",
+      "name": "Kredit-/Debitkarte (Stripe)",
+      "enabled": true
+    },
+    {
+      "id": "paypal",
+      "name": "PayPal",
+      "enabled": false
+    }
+  ],
+  "mode": "test"
+}
