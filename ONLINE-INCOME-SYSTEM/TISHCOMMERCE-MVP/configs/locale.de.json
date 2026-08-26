@@ -1,0 +1,30 @@
+{
+  "siteName": "DejaVue3 Digital",
+  "siteTagline": "Geschichten, Gedanken und digitale Werke",
+  "labels": {
+    "products": "Produkte",
+    "productDetails": "Produktdetails",
+    "addToCart": "In den Warenkorb",
+    "viewCart": "Warenkorb ansehen",
+    "cartEmpty": "Dein Warenkorb ist leer.",
+    "total": "Gesamt",
+    "proceedToCheckout": "Zur Kasse",
+    "paymentMethod": "Zahlungsart",
+    "placeOrder": "Bestellung abschließen",
+    "placingOrder": "Bestellung wird verarbeitet…",
+    "orderConfirmationTitle": "Bestellbestätigung",
+    "orderConfirmationMessage": "Vielen Dank. Deine Bestellung wurde erfolgreich verarbeitet.",
+    "payNow": "Jetzt bezahlen",
+    "download": "PDF herunterladen"
+  },
+  "menu": [
+    {"label": "Start", "href": "/"},
+    {"label": "Produkte", "href": "/products"},
+    {"label": "Kontakt", "href": "/contact"}
+  ],
+  "legalLinks": [
+    {"label": "Impressum", "href": "/impressum"},
+    {"label": "Datenschutz", "href": "/datenschutz"},
+    {"label": "Widerruf", "href": "/widerruf"}
+  ]
+}
