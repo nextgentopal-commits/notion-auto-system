@@ -1,0 +1,14 @@
+[
+  {
+    "ID": "PDF001",
+    "Title": "Produkt 001 – Test-PDF",
+    "Slug": "produkt-001-test-pdf",
+    "ShortDescription": "Erstes digitales Testprodukt für den MVP-Verkaufsfluss.",
+    "LongDescription": "Dieses Produkt dient ausschließlich dem technischen Test von Produktseite, Checkout, Zahlung und PDF-Auslieferung.",
+    "RegularPrice": 1.00,
+    "Currency": "EUR",
+    "Category": "PDF",
+    "DownloadURL": "PLACEHOLDER_SIGNED_OR_PRIVATE_URL",
+    "Status": "test"
+  }
+]
